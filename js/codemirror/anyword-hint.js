@@ -36,7 +36,8 @@
             ["throttle_movement", "", "For use in conjunction with realtime_interval - this stops you from moving crazy fast - repeated keypresses of the same movement direction will not increase your speed. This doesn't apply to the action button."],
             ["verbose_logging", "", "As you play the game, spits out information about all rules applied as you play"],
             ["youtube", "5MJLi5_dyn0", "If you write the youtube tag followed by the ID of a youtube video, it will play in the background."],
-            ["zoomscreen", "WxH", "Zooms the camera in to a WxH section of the map around the player, centered on the player."]
+            ["zoomscreen", "WxH", "Zooms the camera in to a WxH section of the map around the player, centered on the player."],
+            ["noautosave", "", "Keeps the game from saving after each level"]
         ];
 
         var COLOR_WORDS = [
@@ -44,7 +45,7 @@
             "black", "white", "darkgray", "lightgray", "gray", "red", "darkred", "lightred", "brown", "darkbrown", "lightbrown", "orange", "yellow", "green", "darkgreen", "lightgreen", "blue", "lightblue", "darkblue", "purple", "pink", "transparent"];
         var RULE_COMMAND_WORDS = [
             "COMMAND",
-            "sfx0", "sfx1", "sfx2", "sfx3", "sfx4", "sfx5", "sfx6", "sfx7", "sfx8", "sfx9", "sfx10", "cancel", "checkpoint", "restart", "win", "message", "again"];
+            "sfx0", "sfx1", "sfx2", "sfx3", "sfx4", "sfx5", "sfx6", "sfx7", "sfx8", "sfx9", "sfx10", "cancel", "checkpoint", "restart", "win", "message", "again", "wintype", "savegame"];
 
         var CARDINAL_DIRECTION_WORDS = [
             "DIRECTION",
@@ -64,12 +65,14 @@
 
         var WINCONDITION_WORDS = [
             "LOGICWORD",
-            "some", "on", "no", "all"]
+            "some", "on", "no", "all", "section"]
 
         var LEGEND_LOGICWORDS = [
                 "LOGICWORD",
                 "and","or"
-            ]
+        ]
+        var LEVEL_COMMAND_WORDS = ["MESSAGE_VERB",
+                                   "message", "section", "savegame", "goto", "begincond", "contcond", "elsecond", "endcond", "evaluate"]
 
 
         function renderHint(elt,data,cur){
@@ -194,7 +197,7 @@
                 case 'levels':
                     {
                         if (lineToCursor.trim().split(/\s+/ ).length<2) {
-                            candlists.push(["MESSAGE_VERB","message"]);
+                            candlists.push(LEVEL_COMMAND_WORDS);
                         }
                         break;
                     }

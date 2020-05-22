@@ -1,22 +1,22 @@
 /*
-credits
+  credits
 
-brunt of the work by stephen lavelle (www.increpare.com)
+  brunt of the work by stephen lavelle (www.increpare.com)
 
-all open source mit license blah blah
+  all open source mit license blah blah
 
-testers:
-none, yet
+  testers:
+  none, yet
 
-code used
+  code used
 
-colors used
-color values for named colours from arne, mostly (and a couple from a 32-colour palette attributed to him)
-http://androidarts.com/palette/16pal.htm
+  colors used
+  color values for named colours from arne, mostly (and a couple from a 32-colour palette attributed to him)
+  http://androidarts.com/palette/16pal.htm
 
-the editor is a slight modification of codemirro (codemirror.net), which is crazy awesome.
+  the editor is a slight modification of codemirro (codemirror.net), which is crazy awesome.
 
-for post-launch credits, check out activty on github.com/increpare/PuzzleScript
+  for post-launch credits, check out activty on github.com/increpare/PuzzleScript
 
 */
 
@@ -30,9 +30,9 @@ function logErrorCacheable(str, lineNumber,urgent) {
             return logErrorNoLine(str);
         }
         var errorString = '<a onclick="jumpToLine(' + lineNumber.toString() + ');"  href="javascript:void(0);"><span class="errorTextLineNumber"> line ' + lineNumber.toString() + '</span></a> : ' + '<span class="errorText">' + str + '</span>';
-         if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
+        if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
             //do nothing, duplicate error
-         } else {
+        } else {
             consolePrint(errorString);
             errorStrings.push(errorString);
             errorCount++;
@@ -46,9 +46,9 @@ function logError(str, lineNumber,urgent) {
             return logErrorNoLine(str,urgent);
         }
         var errorString = '<a onclick="jumpToLine(' + lineNumber.toString() + ');"  href="javascript:void(0);"><span class="errorTextLineNumber"> line ' + lineNumber.toString() + '</span></a> : ' + '<span class="errorText">' + str + '</span>';
-         if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
+        if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
             //do nothing, duplicate error
-         } else {
+        } else {
             consolePrint(errorString,true);
             errorStrings.push(errorString);
             errorCount++;
@@ -62,9 +62,9 @@ function logWarning(str, lineNumber,urgent) {
             return logErrorNoLine(str);
         }
         var errorString = '<a onclick="jumpToLine(' + lineNumber.toString() + ');"  href="javascript:void(0);"><span class="errorTextLineNumber"> line ' + lineNumber.toString() + '</span></a> : ' + '<span class="warningText">' + str + '</span>';
-         if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
+        if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
             //do nothing, duplicate error
-         } else {
+        } else {
             consolePrint(errorString,true);
             errorStrings.push(errorString);
         }
@@ -73,9 +73,9 @@ function logWarning(str, lineNumber,urgent) {
 function logErrorNoLine(str,urgent) {
     if (compiling||urgent) {
         var errorString = '<span class="errorText">' + str + '</span>';
-         if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
+        if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
             //do nothing, duplicate error
-         } else {
+        } else {
             consolePrint(errorString,true);
             errorStrings.push(errorString);
         }
@@ -88,9 +88,9 @@ function logErrorNoLine(str,urgent) {
 function logBetaMessage(str,urgent){
     if (compiling||urgent) {
         var errorString = '<span class="betaText">' + str + '</span>';
-         if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
+        if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
             //do nothing, duplicate error
-         } else {
+        } else {
             consoleError(errorString);
             errorStrings.push(errorString);
         }
@@ -99,10 +99,10 @@ function logBetaMessage(str,urgent){
 
 function blankLineHandle(state) {
     if (state.section === 'levels') {
-            if (state.levels[state.levels.length - 1].length > 0)
-            {
-                state.levels.push([]);
-            }
+        if (state.levels[state.levels.length - 1].length > 0)
+        {
+            state.levels.push([]);
+        }
     } else if (state.section === 'objects') {
         state.objects_section = 0;
     }
@@ -110,28 +110,28 @@ function blankLineHandle(state) {
 
 //for IE support
 if (typeof Object.assign != 'function') {
-  (function () {
-    Object.assign = function (target) {
-      'use strict';
-      // We must check against these specific cases.
-      if (target === undefined || target === null) {
-        throw new TypeError('Cannot convert undefined or null to object');
-      }
- 
-      var output = Object(target);
-      for (var index = 1; index < arguments.length; index++) {
-        var source = arguments[index];
-        if (source !== undefined && source !== null) {
-          for (var nextKey in source) {
-            if (source.hasOwnProperty(nextKey)) {
-              output[nextKey] = source[nextKey];
+    (function () {
+        Object.assign = function (target) {
+            'use strict';
+            // We must check against these specific cases.
+            if (target === undefined || target === null) {
+                throw new TypeError('Cannot convert undefined or null to object');
             }
-          }
-        }
-      }
-      return output;
-    };
-  })();
+            
+            var output = Object(target);
+            for (var index = 1; index < arguments.length; index++) {
+                var source = arguments[index];
+                if (source !== undefined && source !== null) {
+                    for (var nextKey in source) {
+                        if (source.hasOwnProperty(nextKey)) {
+                            output[nextKey] = source[nextKey];
+                        }
+                    }
+                }
+            }
+            return output;
+        };
+    })();
 }
 
 var codeMirrorFn = function() {
@@ -182,8 +182,8 @@ var codeMirrorFn = function() {
     var relativedirs = ['^', 'v', '<', '>', 'moving','stationary','parallel','perpendicular', 'no'];
     var logicWords = ['all', 'no', 'on', 'some'];
     var sectionNames = ['objects', 'legend', 'sounds', 'collisionlayers', 'rules', 'winconditions', 'levels'];
-	var commandwords = ["sfx0","sfx1","sfx2","sfx3","sfx4","sfx5","sfx6","sfx7","sfx8","sfx9","sfx10","cancel","checkpoint","restart","win","message","again"];
-    var reg_commands = /\s*(sfx0|sfx1|sfx2|sfx3|Sfx4|sfx5|sfx6|sfx7|sfx8|sfx9|sfx10|cancel|checkpoint|restart|win|message|again)\s*/;
+    var commandwords = ["sfx0","sfx1","sfx2","sfx3","sfx4","sfx5","sfx6","sfx7","sfx8","sfx9","sfx10","cancel","checkpoint","restart","win","message","again", "wintype", "savegame"];
+    var reg_commands = /\s*(sfx0|sfx1|sfx2|sfx3|Sfx4|sfx5|sfx6|sfx7|sfx8|sfx9|sfx10|cancel|checkpoint|restart|win|message|again|exit|wintype|savegame)\s*/;
     var reg_name = /[\w]+\s*/;///\w*[a-uw-zA-UW-Z0-9_]/;
     var reg_number = /[\d]+/;
     var reg_soundseed = /\d+\b/;
@@ -198,8 +198,9 @@ var codeMirrorFn = function() {
     var reg_ruledirectionindicators = /^(up|down|left|right|horizontal|vertical|orthogonal|late|rigid)$/;
     var reg_sounddirectionindicators = /\s*(up|down|left|right|horizontal|vertical|orthogonal)\s*/;
     var reg_winconditionquantifiers = /^(all|any|no|some)$/;
-    var reg_keywords = /(checkpoint|objects|collisionlayers|legend|sounds|rules|winconditions|\.\.\.|levels|up|down|left|right|^|\||\[|\]|v|\>|\<|no|horizontal|orthogonal|vertical|any|all|no|some|moving|stationary|parallel|perpendicular|action)/;
-    var keyword_array = ['checkpoint','objects', 'collisionlayers', 'legend', 'sounds', 'rules', '...','winconditions', 'levels','|','[',']','up', 'down', 'left', 'right', 'late','rigid', '^','v','\>','\<','no','randomdir','random', 'horizontal', 'vertical','any', 'all', 'no', 'some', 'moving','stationary','parallel','perpendicular','action','message'];
+    var reg_keywords = /(checkpoint|objects|collisionlayers|legend|sounds|rules|winconditions|\.\.\.|levels|up|down|left|right|^|\||\[|\]|v|\>|\<|no|horizontal|orthogonal|vertical|any|all|no|some|moving|stationary|parallel|perpendicular|action|wintype|section|goto|evaluate|begincond|contcond|elsecond|endcond)/;
+    var keyword_array = ['checkpoint','objects', 'collisionlayers', 'legend', 'sounds', 'rules', '...','winconditions', 'levels','|','[',']','up', 'down', 'left', 'right', 'late','rigid', '^','v','\>','\<','no','randomdir','random', 'horizontal', 'vertical','any', 'all', 'no', 'some', 'moving','stationary','parallel','perpendicular','action','message', 'wintype', 'goto', 'section', 'savegame', 'begincond', 'contcond', 'elsecond', 'endcond', 'evaluate'];
+    var reg_levelstandalone = /\s*(message|section|goto|evaluate|savegame|begincond|contcond|elsecond|endcond)\s*/;
 
     //  var keywordRegex = new RegExp("\\b(("+cons.join(")|(")+"))$", 'i');
 
@@ -215,19 +216,19 @@ var codeMirrorFn = function() {
         copyState: function(state) {
             var objectsCopy = {};
             for (var i in state.objects) {
-              if (state.objects.hasOwnProperty(i)) {
-                var o = state.objects[i];
-                objectsCopy[i] = {
-                  colors: o.colors.concat([]),
-                  lineNumber : o.lineNumber,
-                  spritematrix: o.spritematrix.concat([])
+                if (state.objects.hasOwnProperty(i)) {
+                    var o = state.objects[i];
+                    objectsCopy[i] = {
+                        colors: o.colors.concat([]),
+                        lineNumber : o.lineNumber,
+                        spritematrix: o.spritematrix.concat([])
+                    }
                 }
-              }
             }
 
             var collisionLayersCopy = [];
             for (var i = 0; i < state.collisionLayers.length; i++) {
-              collisionLayersCopy.push(state.collisionLayers[i].concat([]));
+                collisionLayersCopy.push(state.collisionLayers[i].concat([]));
             }
 
             var legend_synonymsCopy = [];
@@ -235,97 +236,101 @@ var codeMirrorFn = function() {
             var legend_propertiesCopy = [];
             var soundsCopy = [];
             var levelsCopy = [];
-            var winConditionsCopy = [];
+            var winConditionsCopy = {};
 
             for (var i = 0; i < state.legend_synonyms.length; i++) {
-              legend_synonymsCopy.push(state.legend_synonyms[i].concat([]));
+                legend_synonymsCopy.push(state.legend_synonyms[i].concat([]));
             }
             for (var i = 0; i < state.legend_aggregates.length; i++) {
-              legend_aggregatesCopy.push(state.legend_aggregates[i].concat([]));
+                legend_aggregatesCopy.push(state.legend_aggregates[i].concat([]));
             }
             for (var i = 0; i < state.legend_properties.length; i++) {
-              legend_propertiesCopy.push(state.legend_properties[i].concat([]));
+                legend_propertiesCopy.push(state.legend_properties[i].concat([]));
             }
             for (var i = 0; i < state.sounds.length; i++) {
-              soundsCopy.push(state.sounds[i].concat([]));
+                soundsCopy.push(state.sounds[i].concat([]));
             }
             for (var i = 0; i < state.levels.length; i++) {
-              levelsCopy.push(state.levels[i].concat([]));
+                levelsCopy.push(state.levels[i].concat([]));
             }
-            for (var i = 0; i < state.winconditions.length; i++) {
-              winConditionsCopy.push(state.winconditions[i].concat([]));
+            for (var i in state.winconditions) {
+                winConditionsCopy[i] = [];
+                for(var j = 0; j < state.winconditions[i].length; j++) {
+                    winConditionsCopy[i].push(state.winconditions[i][j].concat([]));
+                }
             }
 
             var original_case_namesCopy = Object.assign({},state.original_case_names);
             
             var nstate = {
-              lineNumber: state.lineNumber,
+                lineNumber: state.lineNumber,
 
-              objects: objectsCopy,
-              collisionLayers: collisionLayersCopy,
+                objects: objectsCopy,
+                collisionLayers: collisionLayersCopy,
 
-              commentLevel: state.commentLevel,
-              section: state.section,
-              visitedSections: state.visitedSections.concat([]),
+                commentLevel: state.commentLevel,
+                section: state.section,
+                visitedSections: state.visitedSections.concat([]),
 
-              objects_candname: state.objects_candname,
-              objects_section: state.objects_section,
-              objects_spritematrix: state.objects_spritematrix.concat([]),
+                objects_candname: state.objects_candname,
+                objects_section: state.objects_section,
+                objects_spritematrix: state.objects_spritematrix.concat([]),
 
-              tokenIndex: state.tokenIndex,
-              legend_synonyms: legend_synonymsCopy,
-              legend_aggregates: legend_aggregatesCopy,
-              legend_properties: legend_propertiesCopy,
+                tokenIndex: state.tokenIndex,
+                legend_synonyms: legend_synonymsCopy,
+                legend_aggregates: legend_aggregatesCopy,
+                legend_properties: legend_propertiesCopy,
 
-              sounds: soundsCopy,
+                sounds: soundsCopy,
 
-              rules: state.rules.concat([]),
+                rules: state.rules.concat([]),
 
-              names: state.names.concat([]),
+                names: state.names.concat([]),
 
-              winconditions: winConditionsCopy,
+                currentwincondition: state.currentwincondition,
+                winconditions: winConditionsCopy,
 
-              original_case_names : original_case_namesCopy,
+                original_case_names : original_case_namesCopy,
 
-              abbrevNames: state.abbrevNames.concat([]),
+                abbrevNames: state.abbrevNames.concat([]),
 
-              metadata : state.metadata.concat([]),
+                metadata : state.metadata.concat([]),
 
-              levels: levelsCopy,
+                levels: levelsCopy,
 
-              STRIDE_OBJ : state.STRIDE_OBJ,
-              STRIDE_MOV : state.STRIDE_MOV
+                STRIDE_OBJ : state.STRIDE_OBJ,
+                STRIDE_MOV : state.STRIDE_MOV
             };
 
-            return nstate;        
+            return nstate;
         },
         blankLine: function(state) {
             if (state.section === 'levels') {
-                    if (state.levels[state.levels.length - 1].length > 0)
-                    {
-                        state.levels.push([]);
-                    }
+                if (state.levels[state.levels.length - 1].length > 0)
+                {
+                    state.levels.push([]);
+                }
             }
         },
         token: function(stream, state) {
-           	var mixedCase = stream.string;
+            var mixedCase = stream.string;
             var sol = stream.sol();
             if (sol) {
                 stream.string = stream.string.toLowerCase();
                 state.tokenIndex=0;
                 /*   if (state.lineNumber==undefined) {
-                        state.lineNumber=1;
-                }
-                else {
-                    state.lineNumber++;
-                }*/
+                     state.lineNumber=1;
+                     }
+                     else {
+                     state.lineNumber++;
+                     }*/
 
             }
 
             function registerOriginalCaseName(candname){
 
                 function escapeRegExp(str) {
-                  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+                    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
                 }
 
                 var nameFinder =  new RegExp("\\b"+escapeRegExp(candname)+"\\b","i")
@@ -418,9 +423,9 @@ var codeMirrorFn = function() {
                         //populate names from rules
                         for (var n in state.objects) {
                             if (state.objects.hasOwnProperty(n)) {
-/*                                if (state.names.indexOf(n)!==-1) {
-                                    logError('Object "'+n+'" has been declared to be multiple different things',state.objects[n].lineNumber);
-                                }*/
+                                /*                                if (state.names.indexOf(n)!==-1) {
+                                                                  logError('Object "'+n+'" has been declared to be multiple different things',state.objects[n].lineNumber);
+                                                                  }*/
                                 state.names.push(n);
                             }
                         }
@@ -428,27 +433,27 @@ var codeMirrorFn = function() {
                         for (var i = 0; i < state.legend_synonyms.length; i++) {
                             var n = state.legend_synonyms[i][0];
                             /*
-                            if (state.names.indexOf(n)!==-1) {
-                                logError('Object "'+n+'" has been declared to be multiple different things',state.legend_synonyms[i].lineNumber);
-                            }
+                              if (state.names.indexOf(n)!==-1) {
+                              logError('Object "'+n+'" has been declared to be multiple different things',state.legend_synonyms[i].lineNumber);
+                              }
                             */
                             state.names.push(n);
                         }
                         for (var i = 0; i < state.legend_aggregates.length; i++) {
                             var n = state.legend_aggregates[i][0];
                             /*
-                            if (state.names.indexOf(n)!==-1) {
-                                logError('Object "'+n+'" has been declared to be multiple different things',state.legend_aggregates[i].lineNumber);
-                            }
+                              if (state.names.indexOf(n)!==-1) {
+                              logError('Object "'+n+'" has been declared to be multiple different things',state.legend_aggregates[i].lineNumber);
+                              }
                             */
                             state.names.push(n);
                         }
                         for (var i = 0; i < state.legend_properties.length; i++) {
                             var n = state.legend_properties[i][0];
                             /*
-                            if (state.names.indexOf(n)!==-1) {
-                                logError('Object "'+n+'" has been declared to be multiple different things',state.legend_properties[i].lineNumber);
-                            }                           
+                              if (state.names.indexOf(n)!==-1) {
+                              logError('Object "'+n+'" has been declared to be multiple different things',state.legend_properties[i].lineNumber);
+                              }                           
                             */ 
                             state.names.push(n);
                         }
@@ -489,7 +494,7 @@ var codeMirrorFn = function() {
                 switch (state.section) {
                 case 'objects':
                     {
-						var tryParseName = function() {
+                        var tryParseName = function() {
                             //LOOK FOR NAME
                             var match_name = sol ? stream.match(reg_name, true) : stream.match(/[^\s\()]+\s*/,true);
                             if (match_name == null) {
@@ -499,37 +504,37 @@ var codeMirrorFn = function() {
                                 }
                                 return 'ERROR';
                             } else {
-                            	var candname = match_name[0].trim();
+                                var candname = match_name[0].trim();
                                 if (state.objects[candname] !== undefined) {
                                     logError('Object "' + candname.toUpperCase() + '" defined multiple times.', state.lineNumber);
                                     return 'ERROR';
                                 }
                                 for (var i=0;i<state.legend_synonyms.length;i++) {
-                                	var entry = state.legend_synonyms[i];
-                                	if (entry[0]==candname) {
-                                    	logError('Name "' + candname.toUpperCase() + '" already in use.', state.lineNumber);                                		
-                                	}
+                                    var entry = state.legend_synonyms[i];
+                                    if (entry[0]==candname) {
+                                        logError('Name "' + candname.toUpperCase() + '" already in use.', state.lineNumber);                                		
+                                    }
                                 }
                                 if (keyword_array.indexOf(candname)>=0) {
                                     logWarning('You named an object "' + candname.toUpperCase() + '", but this is a keyword. Don\'t do that!', state.lineNumber);
                                 }
 
                                 if (sol) {
-                                	state.objects_candname = candname;
+                                    state.objects_candname = candname;
                                     registerOriginalCaseName(candname);
-                                	state.objects[state.objects_candname] = {
-										                                	lineNumber: state.lineNumber,
-										                                	colors: [],
-										                                	spritematrix: []
-										                                };
+                                    state.objects[state.objects_candname] = {
+                                        lineNumber: state.lineNumber,
+                                        colors: [],
+                                        spritematrix: []
+                                    };
 
-								} else {
-									//set up alias
+                                } else {
+                                    //set up alias
                                     registerOriginalCaseName(candname);
-									var synonym = [candname,state.objects_candname];
-									synonym.lineNumber = state.lineNumber;
-									state.legend_synonyms.push(synonym);
-								}
+                                    var synonym = [candname,state.objects_candname];
+                                    synonym.lineNumber = state.lineNumber;
+                                    state.legend_synonyms.push(synonym);
+                                }
                                 state.objects_section = 1;
                                 return 'NAME';
                             }
@@ -624,9 +629,9 @@ var codeMirrorFn = function() {
                                 return 'COLOR FADECOLOR';
                             }
                         default:
-                        	{
-                        	window.console.logError("EEK shouldn't get here.");
-                        	}
+                            {
+                                window.console.logError("EEK shouldn't get here.");
+                            }
                         }
                         break;
                     }
@@ -640,11 +645,11 @@ var codeMirrorFn = function() {
                         }
                         candname = stream.match(reg_soundverbs, true);
                         if (candname!==null) {
-                        	return 'SOUNDVERB';
+                            return 'SOUNDVERB';
                         }
                         candname = stream.match(reg_sounddirectionindicators,true);
                         if (candname!==null) {
-                        	return 'DIRECTION';
+                            return 'DIRECTION';
                         }
                         candname = stream.match(reg_soundseed, true);
                         if (candname !== null)
@@ -652,13 +657,13 @@ var codeMirrorFn = function() {
                             state.tokenIndex++;
                             return 'SOUND';
                         } 
-                       	candname = stream.match(/[^\[\|\]\s]*/, true);
-                       	if (candname!== null ) {
-                       		var m = candname[0].trim();
-                       		if (state.names.indexOf(m)>=0) {
-                       			return 'NAME';
-                       		}
-                       	}
+                        candname = stream.match(/[^\[\|\]\s]*/, true);
+                        if (candname!== null ) {
+                            var m = candname[0].trim();
+                            if (state.names.indexOf(m)>=0) {
+                                return 'NAME';
+                            }
+                        }
 
                         candname = stream.match(reg_notcommentstart, true);
                         logError('unexpected sound token "'+candname+'".' , state.lineNumber);
@@ -689,10 +694,10 @@ var codeMirrorFn = function() {
                             var candname = match_name[0].trim();
 
                             var substitutor = function(n) {
-                            	n = n.toLowerCase();
-                            	if (n in state.objects) {
-                            		return [n];
-                            	} 
+                                n = n.toLowerCase();
+                                if (n in state.objects) {
+                                    return [n];
+                                } 
 
 
                                 for (var i=0;i<state.legend_synonyms.length;i++) {
@@ -702,22 +707,22 @@ var codeMirrorFn = function() {
                                     }
                                 }
 
-                            	for (var i=0;i<state.legend_aggregates.length;i++) {
-                            		var a = state.legend_aggregates[i];
-                            		if (a[0]===n) {           
-                            			logError('"'+n+'" is an aggregate (defined using "and"), and cannot be added to a single layer because its constituent objects must be able to coexist.', state.lineNumber);
-                            			return [];         
-                            		}
-                            	}
-                            	for (var i=0;i<state.legend_properties.length;i++) {
-                            		var a = state.legend_properties[i];
-                            		if (a[0]===n) {  
+                                for (var i=0;i<state.legend_aggregates.length;i++) {
+                                    var a = state.legend_aggregates[i];
+                                    if (a[0]===n) {           
+                                        logError('"'+n+'" is an aggregate (defined using "and"), and cannot be added to a single layer because its constituent objects must be able to coexist.', state.lineNumber);
+                                        return [];         
+                                    }
+                                }
+                                for (var i=0;i<state.legend_properties.length;i++) {
+                                    var a = state.legend_properties[i];
+                                    if (a[0]===n) {  
                                         var result = [].concat.apply([],a.slice(1).map(substitutor));
-                            			return result;
-                            		}
-                            	}
-                            	logError('Cannot add "' + candname.toUpperCase() + '" to a collision layer; it has not been declared.', state.lineNumber);                                
-                            	return [];
+                                        return result;
+                                    }
+                                }
+                                logError('Cannot add "' + candname.toUpperCase() + '" to a collision layer; it has not been declared.', state.lineNumber);                                
+                                return [];
                             };
                             if (candname==='background' ) {
                                 if (state.collisionLayers.length>0&&state.collisionLayers[state.collisionLayers.length-1].length>0) {
@@ -758,9 +763,9 @@ var codeMirrorFn = function() {
 
                             state.collisionLayers[state.collisionLayers.length - 1] = state.collisionLayers[state.collisionLayers.length - 1].concat(ar);
                             if (ar.length>0) {
-                            	return 'NAME';                            
+                                return 'NAME';                            
                             } else {
-                            	return 'ERROR';
+                                return 'ERROR';
                             }
                         }
                         break;
@@ -779,17 +784,17 @@ var codeMirrorFn = function() {
                             });
                             var ok = true;
 
-                        	if (splits.length>0) {
-                        		var candname = splits[0].toLowerCase();
-	                            if (keyword_array.indexOf(candname)>=0) {
-	                                logWarning('You named an object "' + candname.toUpperCase() + '", but this is a keyword. Don\'t do that!', state.lineNumber);
-	                            }
+                            if (splits.length>0) {
+                                var candname = splits[0].toLowerCase();
+                                if (keyword_array.indexOf(candname)>=0) {
+                                    logWarning('You named an object "' + candname.toUpperCase() + '", but this is a keyword. Don\'t do that!', state.lineNumber);
+                                }
                                 if (splits.indexOf(candname, 2)>=2) {
                                     logError("You can't define object " + candname.toUpperCase() + " in terms of itself!", state.lineNumber);
                                     ok = false;
                                 }
                                 checkNameNew(state,candname);
-                        	}
+                            }
 
                             if (!ok) {
                             } else if (splits.length < 3) {
@@ -800,112 +805,112 @@ var codeMirrorFn = function() {
                                 logError('names cannot end with the letter "v", because it\'s is used as a direction.', state.lineNumber);
                                 stream.match(reg_notcommentstart, true);
                                 return 'ERROR';
-                            } */ else if (splits.length === 3) {
-                                var synonym = [splits[0], splits[2].toLowerCase()];
-                                synonym.lineNumber = state.lineNumber;
+                                } */ else if (splits.length === 3) {
+                                    var synonym = [splits[0], splits[2].toLowerCase()];
+                                    synonym.lineNumber = state.lineNumber;
 
-                                registerOriginalCaseName(splits[0]);
-                                state.legend_synonyms.push(synonym);
-                            } else if (splits.length % 2 === 0) {
-                                ok = false;
-                            } else {
-                                var lowertoken = splits[3].toLowerCase();
-                                if (lowertoken === 'and') {
-
-	                                var substitutor = function(n) {
-	                                	n = n.toLowerCase();
-	                                	if (n in state.objects) {
-	                                		return [n];
-	                                	} 
-	                                	for (var i=0;i<state.legend_synonyms.length;i++) {
-	                                		var a = state.legend_synonyms[i];
-	                                		if (a[0]===n) {   
-	                                			return substitutor(a[1]);
-	                                		}
-	                                	}
-	                                	for (var i=0;i<state.legend_aggregates.length;i++) {
-	                                		var a = state.legend_aggregates[i];
-	                                		if (a[0]===n) {                                			
-	                                			return [].concat.apply([],a.slice(1).map(substitutor));
-	                                		}
-	                                	}
-	                                	for (var i=0;i<state.legend_properties.length;i++) {
-	                                		var a = state.legend_properties[i];
-	                                		if (a[0]===n) {         
-	                                			logError("Cannot define an aggregate (using 'and') in terms of properties (something that uses 'or').", state.lineNumber);
-	                                			ok=false;
-	                                			return [n];
-	                                		}
-	                                	}
-	                                	return [n];
-	                                };
-
-                                    for (var i = 5; i < splits.length; i += 2) {
-                                        if (splits[i].toLowerCase() !== 'and') {
-                                            ok = false;
-                                            break;
-                                        }
-                                    }
-                                    if (ok) {
-                                        var newlegend = [splits[0]].concat(substitutor(splits[2])).concat(substitutor(splits[4]));
-                                        for (var i = 6; i < splits.length; i += 2) {
-                                            newlegend = newlegend.concat(substitutor(splits[i]));
-                                        }
-                                        newlegend.lineNumber = state.lineNumber;
-
-                                        registerOriginalCaseName(newlegend[0]);
-                                        state.legend_aggregates.push(newlegend);
-                                    }
-                                } else if (lowertoken === 'or') {
-
-	                                var substitutor = function(n) {
-	                                	n = n.toLowerCase();
-	                                	if (n in state.objects) {
-	                                		return [n];
-	                                	} 
-
-	                                	for (var i=0;i<state.legend_synonyms.length;i++) {
-	                                		var a = state.legend_synonyms[i];
-	                                		if (a[0]===n) {   
-	                                			return substitutor(a[1]);
-	                                		}
-	                                	}
-	                                	for (var i=0;i<state.legend_aggregates.length;i++) {
-	                                		var a = state.legend_aggregates[i];
-	                                		if (a[0]===n) {           
-	                                			logError("Cannot define a property (using 'or') in terms of aggregates (something that uses 'and').", state.lineNumber);
-	                                			ok=false;          
-	                                		}
-	                                	}
-	                                	for (var i=0;i<state.legend_properties.length;i++) {
-	                                		var a = state.legend_properties[i];
-	                                		if (a[0]===n) {  
-	                                			return [].concat.apply([],a.slice(1).map(substitutor));
-	                                		}
-	                                	}
-	                                	return [n];
-	                                };
-
-                                    for (var i = 5; i < splits.length; i += 2) {
-                                        if (splits[i].toLowerCase() !== 'or') {
-                                            ok = false;
-                                            break;
-                                        }
-                                    }
-                                    if (ok) {
-                                        var newlegend = [splits[0]].concat(substitutor(splits[2])).concat(substitutor(splits[4]));
-                                        for (var i = 6; i < splits.length; i += 2) {
-                                            newlegend.push(splits[i].toLowerCase());
-                                        }
-                                        newlegend.lineNumber = state.lineNumber;
-
-                                        registerOriginalCaseName(newlegend[0]);
-                                        state.legend_properties.push(newlegend);
-                                    }
-                                } else {
+                                    registerOriginalCaseName(splits[0]);
+                                    state.legend_synonyms.push(synonym);
+                                } else if (splits.length % 2 === 0) {
                                     ok = false;
+                                } else {
+                                    var lowertoken = splits[3].toLowerCase();
+                                    if (lowertoken === 'and') {
+
+                                        var substitutor = function(n) {
+                                            n = n.toLowerCase();
+                                            if (n in state.objects) {
+                                                return [n];
+                                            } 
+                                            for (var i=0;i<state.legend_synonyms.length;i++) {
+                                                var a = state.legend_synonyms[i];
+                                                if (a[0]===n) {   
+                                                    return substitutor(a[1]);
+                                                }
+                                            }
+                                            for (var i=0;i<state.legend_aggregates.length;i++) {
+                                                var a = state.legend_aggregates[i];
+                                                if (a[0]===n) {                                			
+                                                    return [].concat.apply([],a.slice(1).map(substitutor));
+                                                }
+                                            }
+                                            for (var i=0;i<state.legend_properties.length;i++) {
+                                                var a = state.legend_properties[i];
+                                                if (a[0]===n) {         
+                                                    logError("Cannot define an aggregate (using 'and') in terms of properties (something that uses 'or').", state.lineNumber);
+                                                    ok=false;
+                                                    return [n];
+                                                }
+                                            }
+                                            return [n];
+                                        };
+
+                                        for (var i = 5; i < splits.length; i += 2) {
+                                            if (splits[i].toLowerCase() !== 'and') {
+                                                ok = false;
+                                                break;
+                                            }
+                                        }
+                                        if (ok) {
+                                            var newlegend = [splits[0]].concat(substitutor(splits[2])).concat(substitutor(splits[4]));
+                                            for (var i = 6; i < splits.length; i += 2) {
+                                                newlegend = newlegend.concat(substitutor(splits[i]));
+                                            }
+                                            newlegend.lineNumber = state.lineNumber;
+
+                                            registerOriginalCaseName(newlegend[0]);
+                                            state.legend_aggregates.push(newlegend);
+                                        }
+                                    } else if (lowertoken === 'or') {
+
+                                        var substitutor = function(n) {
+                                            n = n.toLowerCase();
+                                            if (n in state.objects) {
+                                                return [n];
+                                            } 
+
+                                            for (var i=0;i<state.legend_synonyms.length;i++) {
+                                                var a = state.legend_synonyms[i];
+                                                if (a[0]===n) {   
+                                                    return substitutor(a[1]);
+                                                }
+                                            }
+                                            for (var i=0;i<state.legend_aggregates.length;i++) {
+                                                var a = state.legend_aggregates[i];
+                                                if (a[0]===n) {           
+                                                    logError("Cannot define a property (using 'or') in terms of aggregates (something that uses 'and').", state.lineNumber);
+                                                    ok=false;          
+                                                }
+                                            }
+                                            for (var i=0;i<state.legend_properties.length;i++) {
+                                                var a = state.legend_properties[i];
+                                                if (a[0]===n) {  
+                                                    return [].concat.apply([],a.slice(1).map(substitutor));
+                                                }
+                                            }
+                                            return [n];
+                                        };
+
+                                        for (var i = 5; i < splits.length; i += 2) {
+                                            if (splits[i].toLowerCase() !== 'or') {
+                                                ok = false;
+                                                break;
+                                            }
+                                        }
+                                        if (ok) {
+                                            var newlegend = [splits[0]].concat(substitutor(splits[2])).concat(substitutor(splits[4]));
+                                            for (var i = 6; i < splits.length; i += 2) {
+                                                newlegend.push(splits[i].toLowerCase());
+                                            }
+                                            newlegend.lineNumber = state.lineNumber;
+
+                                            registerOriginalCaseName(newlegend[0]);
+                                            state.legend_properties.push(newlegend);
+                                        }
+                                    } else {
+                                        ok = false;
+                                    }
                                 }
-                            }
 
                             if (ok === false) {
                                 logError('incorrect format of legend - should be one of A = B, A = B or C ( or D ...), A = B and C (and D ...)', state.lineNumber);
@@ -936,44 +941,44 @@ var codeMirrorFn = function() {
 
                                 if (state.tokenIndex % 2 === 0) {
 
-	                                var wordExists = function(n) {
-	                                	n = n.toLowerCase();
-	                                	if (n in state.objects) {
-	                                		return true;
-	                                	} 
-	                                	for (var i=0;i<state.legend_aggregates.length;i++) {
-	                                		var a = state.legend_aggregates[i];
-	                                		if (a[0]===n) {                                			
-	                                			return true;
-	                                		}
-	                                	}
-	                                	for (var i=0;i<state.legend_properties.length;i++) {
-	                                		var a = state.legend_properties[i];
-	                                		if (a[0]===n) {  
-	                                			return true;
-	                                		}
-	                                	}
-	                                	for (var i=0;i<state.legend_synonyms.length;i++) {
-	                                		var a = state.legend_synonyms[i];
-	                                		if (a[0]===n) {  
-	                                			return true;
-	                                		}
-	                                	}
-	                                	return false;
-	                                };
+                                    var wordExists = function(n) {
+                                        n = n.toLowerCase();
+                                        if (n in state.objects) {
+                                            return true;
+                                        } 
+                                        for (var i=0;i<state.legend_aggregates.length;i++) {
+                                            var a = state.legend_aggregates[i];
+                                            if (a[0]===n) {                                			
+                                                return true;
+                                            }
+                                        }
+                                        for (var i=0;i<state.legend_properties.length;i++) {
+                                            var a = state.legend_properties[i];
+                                            if (a[0]===n) {  
+                                                return true;
+                                            }
+                                        }
+                                        for (var i=0;i<state.legend_synonyms.length;i++) {
+                                            var a = state.legend_synonyms[i];
+                                            if (a[0]===n) {  
+                                                return true;
+                                            }
+                                        }
+                                        return false;
+                                    };
 
 
                                     if (wordExists(candname)===false) {
-                                            logError('Cannot reference "' + candname.toUpperCase() + '" in the LEGEND section; it has not been defined yet.', state.lineNumber);
-                                            state.tokenIndex++;
-                                            return 'ERROR';
+                                        logError('Cannot reference "' + candname.toUpperCase() + '" in the LEGEND section; it has not been defined yet.', state.lineNumber);
+                                        state.tokenIndex++;
+                                        return 'ERROR';
                                     } else {
-                                            state.tokenIndex++;
-                                            return 'NAME';
+                                        state.tokenIndex++;
+                                        return 'NAME';
                                     }
                                 } else {
-                                        state.tokenIndex++;
-                                        return 'LOGICWORD';
+                                    state.tokenIndex++;
+                                    return 'LOGICWORD';
                                 }
                             }
                         }
@@ -988,15 +993,20 @@ var codeMirrorFn = function() {
                         }
 
                         if (state.tokenIndex===-4) {
-                        	stream.skipToEnd();
-                        	return 'MESSAGE';
+                            stream.skipToEnd();
+                            return 'MESSAGE';
+                        }
+                        if (state.tokenIndex === -5) {
+                            state.tokenIndex = state.recoverToken;
+                            stream.match(/\s*\w+\s*/);
+                            return 'METADATATEXT';
                         }
                         if (stream.match(/\s*\-\>\s*/, true)) {
                             return 'ARROW';
                         }
                         if (ch === '[' || ch === '|' || ch === ']' || ch==='+') {
-                        	if (ch!=='+') {
-                            	state.tokenIndex = 1;
+                            if (ch!=='+') {
+                                state.tokenIndex = 1;
                             }
                             stream.next();
                             stream.match(/\s*/, true);
@@ -1005,7 +1015,7 @@ var codeMirrorFn = function() {
                             var m = stream.match(/[^\[\|\]\s]*/, true)[0].trim();
 
                             if (state.tokenIndex===0&&reg_loopmarker.exec(m)) {
-                            	return 'BRACKET';
+                                return 'BRACKET';
                             } else if (state.tokenIndex === 0 && reg_ruledirectionindicators.exec(m)) {
                                 stream.match(/\s*/, true);
                                 return 'DIRECTION';
@@ -1028,10 +1038,13 @@ var codeMirrorFn = function() {
                                 } else if (m==='random') {
                                     return 'DIRECTION';
                                 } else if (commandwords.indexOf(m)>=0) {
-									if (m==='message') {
-										state.tokenIndex=-4;
-									}                                	
-                                	return 'COMMAND';
+                                    if (m==='message') {
+                                        state.tokenIndex=-4;
+                                    } else if(m==='wintype') {
+                                        state.recoverToken = state.tokenIndex;
+                                        state.tokenIndex = -5;
+                                    }
+                                    return 'COMMAND';
                                 } else {
                                     logError('Name "' + m + '", referred to in a rule, does not exist.', state.lineNumber);
                                     return 'ERROR';
@@ -1043,21 +1056,44 @@ var codeMirrorFn = function() {
                     }
                 case 'winconditions':
                     {
+                        var filtered;
                         if (sol) {
-                        	var tokenized = reg_notcommentstart.exec(stream.string);
-                        	var splitted = tokenized[0].split(/\s/);
-                        	var filtered = splitted.filter(function(v) {return v !== ''});
+                            if(!state.currentwincondition || state.currentwincondition === '') {
+                                state.currentwincondition = ' ';
+                            }
+                            if(!state.winconditions[state.currentwincondition]) {
+                                state.winconditions[state.currentwincondition] = [];
+                            }
+
+                            var tokenized = reg_notcommentstart.exec(stream.string);
+                            var splitted = tokenized[0].split(/\s/);
+                            filtered = splitted.filter(function(v) {return v !== ''});
                             filtered.push(state.lineNumber);
                             
-                            state.winconditions.push(filtered);
+                        }
+                        var match = stream.match(/\s*\w+\s*/);
+                        if(match !== null && state.tokenIndex === -4) {
+
+                            var cw = match[0].trim();
+                            state.currentwincondition = cw;
+                            state.winconditions[cw] = [];
+                            stream.skipToEnd();
+                            return 'METADATATEXT';
+                        }
+                        if(match !== null && match[0].trim() === 'section') {
+                            state.tokenIndex = -4;
+                            // console.log('found section');
+                            return 'COMMAND';
+                        }
+                        if(sol) {
+                        state.winconditions[state.currentwincondition].push(filtered);
                             state.tokenIndex = -1;
                         }
                         state.tokenIndex++;
-                        var match = stream.match(/\s*\w+\s*/);
                         if (match === null) {
-                                logError('incorrect format of win condition.', state.lineNumber);
-                                stream.match(reg_notcommentstart, true);
-                                return 'ERROR';
+                            logError('incorrect format of win condition.', state.lineNumber);
+                            stream.match(reg_notcommentstart, true);
+                            return 'ERROR';
 
                         } else {
                             var candword = match[0].trim();
@@ -1091,14 +1127,18 @@ var codeMirrorFn = function() {
                     {
                         if (sol)
                         {
-                            if (stream.match(/\s*message\s*/, true)) {
+                            var w;
+                            if ((w=stream.match(reg_levelstandalone, true))) {
+                                // TODO: syntax highlighting for Global terms.
+                                console.log(w);
                                 state.tokenIndex = 1;//1/2 = message/level
-                                var newdat = ['\n', mixedCase.slice(stream.pos).trim(),state.lineNumber];
+                                var newdat = ['\n', w[0].trim(), mixedCase.slice(stream.pos).trim(),state.lineNumber];
                                 if (state.levels[state.levels.length - 1].length == 0) {
                                     state.levels.splice(state.levels.length - 1, 0, newdat);
                                 } else {
                                     state.levels.push(newdat);
                                 }
+                                console.log(newdat);
                                 return 'MESSAGE_VERB';
                             } else {
                                 var line = stream.match(reg_notcommentstart, false)[0].trim();
@@ -1125,7 +1165,7 @@ var codeMirrorFn = function() {
                         } else {
                             if (state.tokenIndex == 1) {
                                 stream.skipToEnd();
-                               	return 'MESSAGE';
+                                return 'MESSAGE';
                             }
                         }
 
@@ -1141,55 +1181,55 @@ var codeMirrorFn = function() {
                         }
                         break;
                     }
-	                
-	                default://if you're in the preamble
-	                {
-	            		if (sol) {
-	            			state.tokenIndex=0;
-	            		}
-	            		if (state.tokenIndex==0) {
-		                    var match = stream.match(/\s*\w+\s*/);	                    
-		                    if (match!==null) {
-		                    	var token = match[0].trim();
-		                    	if (sol) {
-		                    		if (['title','author','homepage','background_color','text_color','key_repeat_interval','realtime_interval','again_interval','flickscreen','zoomscreen','color_palette','youtube'].indexOf(token)>=0) {
-		                    			
+                    
+                default://if you're in the preamble
+                    {
+                        if (sol) {
+                            state.tokenIndex=0;
+                        }
+                        if (state.tokenIndex==0) {
+                            var match = stream.match(/\s*\w+\s*/);	                    
+                            if (match!==null) {
+                                var token = match[0].trim();
+                                if (sol) {
+                                    if (['title','author','homepage','background_color','text_color','key_repeat_interval','realtime_interval','again_interval','flickscreen','zoomscreen','color_palette','youtube'].indexOf(token)>=0) {
+                                        
                                         if (token==='youtube' || token==='author' || token==='title') {
                                             stream.string=mixedCase;
                                         }
                                         
                                         var m2 = stream.match(reg_notcommentstart, false);
                                         
-		                    			if(m2!=null) {
+                                        if(m2!=null) {
                                             state.metadata.push(token);
-		                    				state.metadata.push(m2[0].trim());                                            
-		                    			} else {
-		                    				logError('MetaData "'+token+'" needs a value.',state.lineNumber);
-		                    			}
-		                    			state.tokenIndex=1;
-		                    			return 'METADATA';
-		                    		} else if ( ['run_rules_on_level_start','norepeat_action','require_player_movement','debug','verbose_logging','throttle_movement','noundo','noaction','norestart','scanline'].indexOf(token)>=0) {
-		                    			state.metadata.push(token);
-		                    			state.metadata.push("true");
-		                    			state.tokenIndex=-1;
-		                    			return 'METADATA';
-		                    		} else  {
-		                    			logError('Unrecognised stuff in the prelude.', state.lineNumber);
-		                    			return 'ERROR';
-		                    		}
-		                    	} else if (state.tokenIndex==-1) {
-	                   				logError('MetaData "'+token+'" has no parameters.',state.lineNumber);
-		                    		return 'ERROR';
-		                    	}
-		                    	return 'METADATA';
-		                    }       
-		               	} else {
-		               		stream.match(reg_notcommentstart, true);
-		               		return "METADATATEXT";
-		               	}
-	                	break;
-	                }
-	            }
+                                            state.metadata.push(m2[0].trim());                                            
+                                        } else {
+                                            logError('MetaData "'+token+'" needs a value.',state.lineNumber);
+                                        }
+                                        state.tokenIndex=1;
+                                        return 'METADATA';
+                                    } else if ( ['run_rules_on_level_start','norepeat_action','require_player_movement','debug','verbose_logging','throttle_movement','noundo','noaction','norestart','noautosave', 'scanline'].indexOf(token)>=0) {
+                                        state.metadata.push(token);
+                                        state.metadata.push("true");
+                                        state.tokenIndex=-1;
+                                        return 'METADATA';
+                                    } else  {
+                                        logError('Unrecognised stuff in the prelude.', state.lineNumber);
+                                        return 'ERROR';
+                                    }
+                                } else if (state.tokenIndex==-1) {
+                                    logError('MetaData "'+token+'" has no parameters.',state.lineNumber);
+                                    return 'ERROR';
+		                    	      }
+		                    	      return 'METADATA';
+		                        }       
+		               	    } else {
+		               		      stream.match(reg_notcommentstart, true);
+		               		      return "METADATATEXT";
+		               	    }
+	                	    break;
+	                  }
+	              }
             };
 
             if (stream.eol()) {
@@ -1203,12 +1243,12 @@ var codeMirrorFn = function() {
         startState: function() {
             return {
                 /*
-                    permanently useful
+                  permanently useful
                 */
                 objects: {},
 
                 /*
-                    for parsing
+                  for parsing
                 */
                 lineNumber: 0,
 
@@ -1234,7 +1274,8 @@ var codeMirrorFn = function() {
 
                 names: [],
 
-                winconditions: [],
+                currentwincondition: ' ',
+                winconditions: {},
                 metadata: [],
 
                 original_case_names: {},

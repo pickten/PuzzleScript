@@ -590,7 +590,7 @@ function checkKey(e,justPressed) {
         			if (levelEditorOpened===false){
         				printLevel();
         			}
-        			restartTarget=backupLevel();
+        			g.restartTarget=backupLevel();
         			canvasResize();
         		}
         		return prevent(e);
@@ -730,7 +730,7 @@ function update() {
             	messagetext="";
             	textMode=false;
 				titleScreen=false;
-				titleMode=(curlevel>0||curlevelTarget!==null)?1:0;
+				titleMode=(g.curlevel>0||curlevelTarget!==null)?1:0;
 				titleSelected=false;
 				titleSelection=0;
     			canvasResize();  
