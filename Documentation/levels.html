@@ -117,11 +117,62 @@ Levels are separated by blank lines, and you can also display messages if you wa
 <p>
 If you hold CTRL (or, on a Mac, CMD) and left click on the level in the text editor, it will load it in game.
 <p>
-<h3>What stuff is hard to do?</h3>
+<h3>Branching</h3>
 <p>
-Branching.  I have no support for it in terms of this level structure.  If you want a continuous open world you can set <b>zoomscreen</b> or <b>flickscreen</b> in the <a href="prelude.html">prelude</a>.
+  If you want a continuous open world you can set <b>zoomscreen</b> or <b>flickscreen</b> in the <a href="prelude.html">prelude</a>. If you want a real open world, however,
+  you'll probably want <it>level scripting</it>.
+  <h4>Warning: this feature is currently a bit underdeveloped</h4>
+  <p>
+  It also is not very in-keeping with the rest of PuzzleScript; as such I would caution you
+  not to use it unless you really have a specific idea for it, and to keep in mind
+  that I may change my mind about it at some point. That said, I made it because
+  I needed it and so I won't remove it until I have an alternative system in place for all this.
 <p>
-If you can think of an elegant way to implement level branching in the engine, <a href="mailto:analytic@gmail.com">let me know</a>, and I'll consider it : )
+  Level scripting looks very similar to the MESSAGE keyword above.
+  However, unlike the MESSAGE keyword, level scripting features
+  can affect long-term player state that spans beyond a single level.
+  Here are all the available commands:
+<p>
+  <dl>
+    <dt>section</dt>
+  <dd>
+  If you use the <b>section</b> keyword in the LEVELS section, as in 'section tutorial',
+  that teaches PuzzleScript
+  that the tutorial begins there.
+  It might be just one level, or it might go on for much longer.
+  In general, level scripting features tend to make minimal assumptions about how your
+  sections are laid out, and
+  even weird stuff like overlapping sections should not cause any problems.
+  </dd>
+  <dt>goto</dt>
+  <dd>When the engine reaches this level, it will magically try to skip to whatever section or level is indicated. This is pretty free-form, and supports two base versions plus a few special features.
+    <p>
+    The simplest way to use <b>goto</b> is to just write the name of a section that you wannt to jump to.
+    <p>
+    While very much not recommended, you can also write the number of a level. This gets really finnicky and is generally kind of unmanageable. But if for whatever reason you want to do it, be my guest.
+    <p>
+      If you want more advanced features, you can get them. The most useful one is for multi-level sections: if you run 'goto tutorial 5', PuzzleScript will go to the fifth level in the tutorial section. It tries to be smart about what this means, but it's a work in progress. Still, hopefully this will reduce the number of <b>section</b> commands you need.
+    <p>
+      If that fails, you can also use <a href="levelscripting.html">level scripting code</a> to generate the destination level at run time with something like 'goto [nextlevel]'. This can be combined with all the other ways to use 'goto'; for instance, in this silly example, if '[nextlevel]' evaluates to 'tutorial', the 'tutorial' section will get loaded.
+  </dd>
+  <dt>begincond</dt>
+  <dd>begins a conditional.
+    This command accepts one or more values, which can be (and usually are) generated at runtime via <a href="levelscripting.html">level scripting</a>. The values are placed onto the <it>condnitional stack</it> as a group (in the same order as you list them). Conditionals behave similarly to the 'switch' statement of a conventional programming language.
+    <p>
+      Note that the conditional stack is very delicate; as such, any kind of <b>goto</b> will clear the conditional stack (which can be useful for branching levels). Conversely, using <b>goto</b> to jump into the middle of a conditional will cause serious problems.
+  </dd>
+  <dt>endcond</dt>
+  <dd>ends a conditional. This just removes the last group of values added onto the conditional stack. Each conditional must begin with a <b>begincond</b> and end with an <b>endcond</b>; if they are mismatched, PuzzleScript will throw an error.</dd>
+  <dt>contcond</dt>
+  <dd>starts a conditional branch. This command accepts one or more values, which can be (and usually are) generated at runtime via <a href="levelscripting.html">level scripting</a>. If you input N values, PuzzleScript will check the last N values on the conditional stack and compare them. If all N values match, the conditional branch executes; if not, PuzzleScript will jump to the next branch of the same conditional (i.e. the next <b>contcond</b>, <b>elsecond</b>, or <b>endcond</b> in the same conditional). </dd>
+  <dt>elsecond</dt>
+  <dd>starts a conditional branch. This works identically to 'contcond' except that the branch is also skipped if another branch of the same conditional was taken.</dd>
+  <dt>savegame</dt>
+  <dd>saves the game. Only relevant if 'noautosave' is enabled; otherwise, the game will save after every level.</dd>
+  <dt>evaluate</dt>
+  <dd>evaluates one or more <a href="levelscripting.html">level scripting</a> blocks.</dd>
+  </dl>
+
 
 
     </div><!-- /.container -->

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/x-icon" href="ico/favicon.ico" />
+
+    <title>Level Scripting - PuzzleScript Documentation</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html"><img src="../images/mascot_colorful.png"> PuzzleScript</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../editor.html">Make A Game</a></li>
+            
+            <li class="active"><a href="documentation.html">Documentation</a></li>
+          </ul>          
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://www.patreon.com/increpare">Patreon</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+
+      <p>
+        <ol class="breadcrumb">
+          <li><a href="documentation.html">Documentation</a></li>
+          <li class="active">Level Scripting</li>
+        </ol>
+        <p>
+
+          <h1>Level Scripting</h1>
+          <p />
+          Level scripting is an advanced feature that can be used to save
+          and modify state that is preserved between levels.
+          For now, it <it>cannot</it> be used outside of the LEVELS
+          section, although there are some drawbacks to this.
+          <p />
+          Generally speaking, the level scripting code looks like LISP, if LISP were actually just PuzzleScript. So something like:
+          <p />
+          <pre><code>[def | secname | [if| [and | [true] | [] | [false]] | tutorial | challenge]]
+          </code></pre>
+          <p />
+          It's very messy and the parser currently doesn't support newlines.
+          On the flip side, you probably should not be trying to do complicated things in it anyways. 
+          <p />
+          Some things worth keeping in mind.
+          <p />
+          First off, I really did try to sandbox this as best as possible. JavaScript is a nightmare world, and I am handing you a lot of power. If you see even the slightest vulnerability in the code, <it>please</it> report it. By vulnerability, I mean anything that enables arbitrary JavaScript execution.
+          <p />
+          Second, there is no type system. Nothing distinguishes a level from its internal representation; as such, you can get yourself into a great deal of trouble if you're not careful.
+          <p />
+          Third, there are currently <it>no</it> lazy primitives, and that includes stuff like the 'if' function. I do recognize the problems with this, but for the moment you can use a conditional block. In addition, there is no support for first class functions or even user-defined functions.
+          <p />
+          Fourth, in keeping with the idea that this is a power tool for the most nightmarish use cases, you do have access to the raw save state. The variables that are
+          reserved for this are:
+          <p />
+          <pre><code>
+curlevel
+savelevel
+restartTarget
+saveTarget
+lastWin
+condstack
+condvalstack
+_beatlevel
+          </code></pre>
+          <p />
+          I don't think it's possible to cause any weird behavior by modifying them, but you can definitely break your game if you try to mess with them manually. If you think you need to mess with them, check the PuzzleScript source code first.
+          <p />
+          The only exception to the above warning is 'lastWin', which is likely to be a variable you will want to read frequently, as it is the only way to see what the player has done and respond to it. Each time the player finishes a level, it is set to the name of the win type (the default win type is equal to '[]').
+          <p />
+          In addition to these reserved variables, there are a few built-ins that cannot be changed. They are:
+          <p />
+          <dl>
+            <dt>+, -, *, /</dt>
+            <dd>Arithmetic operators.</dd>
+            <dt>and, or, xor, not</dt>
+            <dd>Logical operators.</dd>
+            <dt>&lt;, &gt;, =</dt>
+            <dd>Comparison operators</dd>
+            <dt>array, lit</dt>
+            <dd>Value creation operators. 'lit' may or may not be currently useless. Array is used like '[array|first|second|third]'.</dd>
+            <dt>def, let</dt>
+            <dd>Definition operators.
+              If necessary, 'def' creates a global variable,
+              while 'let' creates a local variable.
+              The syntax '[def|a|b|c|...|value]' corresponds in JavaScript to something like
+              'a.b.c.(...) = value'.
+              Global variables are always saved alongside the rest of the game.
+            </dd>
+            <dt>get</dt>
+            <dd>Value retrieval operator. Syntax is identical to 'def' and 'let'.</dd>
+            <dt>true, false</dt>
+            <dd>Useful constants; any number is also automatically treated as a constant like this. Keep in mind that you do still need the square brackets, so that 'true' represents the string 'true' and '[true]' represents a truth value (likewise for '0' vs '[0]' etc).</dd>
+            <dt>levelid</dt>
+            <dd>Attempts to compute the first level in a given section. This can be pretty finnicky; read the source code or contact me if this isn't doing what you think it should.</dd>
+            <dt>+level, beatlevel, beatlevelby</dt>
+            <dd>
+              The value of '[+level | a | b | c | ...]]' is the level ID of the level
+              'b+c+...' levels after level 'a'.
+              This should function identically to the computations made by <b>goto</b>.
+              After making this computation, '[beatlevel | a | b | c | ...]'
+              says whether or not the level has been completed ever,
+              and '[beatlevelby | w | a | b | c | ...]' whether
+              it has been completed with win type 'w'.
+            </dd>
+            <dt>if</dt>
+            <dd>A simple ternary operator. As noted above, it is <it>not</it> lazy and will evaluate all branches, so be cautious about that.</dd>
+            <dt>map, maparr</dt>
+            <dd>Array mapping functions; this is defined so that
+              '[map | a | b | [array | c | d]]' evaluates to the same thing as
+              '[array | [a | b | c] | [a | b | d]]' and so that both
+              '[maparr | f | a | b]' and '[maparr | [array | f] | a | b]' evaluate
+              to '[array | [f | a] | [f | b]]'.
+            </dd>
+          </dl>
+
+
+          <h2>What stuff is hard to do?</h2>
+          Currently, it's not possible to modify a level dynamically using level scripting;
+          instead, you need to make several copies of a level
+          by hand and then load them dynamically using level scripting.
+          It would be nice to work around this, however, e.g. to more easily have blocks
+          in an overworld that disappear once you complete a level.
+          Strictly speaking,
+          you could also just make a hack and manually
+          create a level from its internal representation
+          and then trick the engine into thinking that's the current level.
+          That said, there ought to be a better way.
+          <p />
+          Also just general programming is hard in this language.
+          There's no support for a lot of common operations like pop/push/length/etc,
+          and that's just because I'd have to manually add them. If you really desperately
+          need to define your own functions, you can do this via <b>goto</b>, for instance,
+          but then managing the call stack is a pain because you have to implement
+          the push/pop behavior and so on and so forth.
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+         ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

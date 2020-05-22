@@ -99,9 +99,62 @@ Some gold on chest
 (you win if all gold has been taken from the chest)
 No gold on chest</code></pre>
 <p>
-If you have multiple win conditions, they all have to be satisfied.
-<p>
-	These should do for most games, but if you want more advanced control over winning and losing, then you can specify your own win rules using <a href="rules.html#commands">commands</a>.
+  If you have multiple win conditions, they normally all have to be satisfied.
+  This is the default, and usually will work fine for your games. However,
+  sometimes you might find it useful to have multiple ways a player can finish a level.
+  Typically, this happens because you have multiple types of levels
+  with different win conditions.
+  <p>
+    For instance, you might want "overworld"
+  levels, where you "win" an overworld level by moving
+  to one of the exits (rather than by solving a puzzle). You might
+  also just want a couple variants on the same idea; for instance, in a relatively
+  traditional sokoban game, you might be ok with players having the choice
+  to either cover all the targets
+    with crates or making it to the exit.
+    <p>
+  To implement this, you'll want <it>win types</it>. Here's what that looks like:
+    <p>
+      <pre><code>
+(Section Neko)
+(neko puzzle - you win if there's no fruit left)
+No Fruit
+
+Section Sokoban
+(sokoban - you win if every target point has a crate on it)
+All Target On Crate 
+
+Section Love
+(you win if Love exists somewhere)
+Some Love 
+
+Section FillChest
+(you win if there's some gold in the chest)
+Some gold on ChestToFill
+
+Section EmptyChest
+(you win if all gold has been taken from the chest)
+No gold on ChestToEmpty</code></pre>
+    <p>
+  If you put this code into your game, you would be able to win in a whopping
+  five ways. You would win immediately if there's no fruit, or if every target
+  is covered by a crate, and so on.
+    <p>
+  As you can see, the only thing you need to do is separate each possible win type
+  by the keyword 'Section'. Each win type should have a unique name;
+  when you win a level, this name will be printed in the console for easier debugging.
+  The very first win type (before any 'Section' keyword) is the 'default' win type,
+  and does not get a name so that games not using this feature shouldn't notice any changes.
+   <p>
+  For technical reasons, win types cannot have a space in their name.
+   <p>
+  As with the simple case where there is only the default win type, you can put multiple
+  win conditions in a single win type; all of them must be satisfied in order
+  for the player to win in that way.
+   <p>
+  If the player satisfies the conditions of multiple win types at once, the engine will prefer whichever appears first when deciding which type of win to award the player.
+   <p>
+  These should do for most games, but if you want more advanced control over winning and losing, then you can specify your own win rules using <a href="rules.html#commands">commands</a>.
 
 
 

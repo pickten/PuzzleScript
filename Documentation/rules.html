@@ -188,11 +188,15 @@ late [Shadow] -> []</code></pre>
       <dt>cancel</dt>
       <dd>cancels the entire turn, and reverts back to how it was at the start of the turn. basically "forget everything and pretend nothing happened"</dd>
       <dt>checkpoint</dt>
-      <dd>saves the game state.  Now, whenever the person presses <b>R</b> to restart, or your do the RESTART command, they'll spawn here instead.</dd>
+      <dd>saves the level state.  Now, whenever the person presses <b>R</b> to restart, or you do the RESTART command, they'll spawn here instead. If 'noautosave' is set, this does not save the game, and then quitting and reloading will not bring the player here.</dd>
+      <dt>savegame</dt>
+      <dd>saves the game state.  Now, whenever the person presses <b>R</b> to restart, or you do the RESTART command, they'll spawn here instead. This also works if the player quits and reloads, even if 'noautosave' is set; generally, you should prefer 'savegame' to 'checkpoint' if 'noautosave' is enabled.</dd>
       <dt>restart</dt>
       <dd>Same as pressing R</dd>
       <dt>Win</dt>
-      <dd>Wins the level!</dd>
+      <dd>Wins the level (if relevant, the win type is the default one)!</dd>
+      <dt>Wintype</dt>
+      <dd>Wins the level; you must specify a win type, as in "wintype helloworld". The win type does not need to be one named in the WINCONDITIONS section.</dd>
       <dt>Message</dt>
       <dd>Gives the player a message.  So you can say things like "Message Hello World".  Reads everything to its right, so it has to be the rightmost argument.</dd>
       <dt>sfx0 ... sfx10</dt>

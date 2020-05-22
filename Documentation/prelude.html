@@ -158,6 +158,10 @@ Here are the possible options:
 			<dd>Disables the undo key (Z)</dd>
 			<dt>norestart</dt>
 			<dd>Disables the restart key (R)</dd>
+      <dt>noautosave</dt>
+      <dd>Prevents the game from saving after every level and after every checkpoint. This is primarily useful if you want to do something fancy. If this is enabled, only the 'savegame' keyword (in either the RULES or LEVELS sections) will cause the game to save. You will
+        almost never want this. One nice use case comes if you have implemented an overworld, where you can use this to make PuzzleScript only save when you go to the overworld. In particular, this can be used to keep the game from trapping the player in a level until they solve it without needing to add alternative exits to every level.
+      </dd>
       <dt>realtime_interval</dt> 
       <dd>The number indicates how long each realtime frame should be.  In the above case, twice a second the game engine will tick, but with no input.  Player input is processed as regular. See <a href="realtime.html">this documentation</a> for more info on making realtime games.</dd>     
 			<dt>require_player_movement</dt>
